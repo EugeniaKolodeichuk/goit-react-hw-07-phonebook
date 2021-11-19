@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { /* connect, */ useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from '../../redux/contacts/selectors';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 import styles from '../Form/Form.module.css';
-import operations from '../../redux/contacts/operations';
 import { addContact } from '../../redux/contacts/operations';
-
-export default function Form(/* { onAddContact } */) {
+import { toast } from 'react-toastify';
+export default function Form() {
   const prodIdName = uuidv4();
   const prodIdNumber = uuidv4();
 
@@ -33,24 +32,16 @@ export default function Form(/* { onAddContact } */) {
   const handleSubmit = e => {
     e.preventDefault();
 
-    /*Before Redux*/
-    /* const contacts = {
-      name,
-      number,
-      id: uuidv4(),
-    };*/
-
-    /* console.log(contacts); */
-
     if (
       contacts.find(
         contact => contact.name.toLowerCase() === name.toLowerCase(),
       )
     ) {
-      alert(`${name} is already in contacts`);
-    } else dispatch(addContact(name, number));
-
-    /* onAddContact(name, number); */
+      toast.error(`${name} is already in your contacts`);
+    } else {
+      dispatch(addContact({ name, number }));
+      toast.success('Сontact was added successfully!');
+    }
     resetForm();
   };
 
@@ -103,13 +94,3 @@ Form.propTypes = {
   number: PropTypes.number,
   name: PropTypes.string,
 };
-
-/*Redux*/
-/* const mapDispatchToProps = dispatch => {
-  return {
-    onAddContact: (name, number) =>
-      dispatch(actions.onAddContact(name, number)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(Form); */

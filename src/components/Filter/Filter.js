@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../Filter/Filter.module.css';
-import { /* connect, */ useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getFilter } from '../../redux/contacts/selectors';
-import actions from '../../redux/contacts/actions';
 
-const Filter = (/* { contacts, onChange } */) => {
+import { onChangeFilter } from '../../redux/contacts/actions';
+
+const Filter = () => {
   const contacts = useSelector(getFilter);
   const dispatch = useDispatch();
 
@@ -17,9 +18,7 @@ const Filter = (/* { contacts, onChange } */) => {
           className={styles.input}
           type="text"
           value={contacts}
-          onChange={event =>
-            dispatch(actions.onChangeFilter(event.target.value))
-          }
+          onChange={event => dispatch(onChangeFilter(event.target.value))}
         />
       </label>
     </div>
@@ -32,14 +31,3 @@ Filter.propTypes = {
 };
 
 export default Filter;
-
-/*Redux*/
-/* const mapStateToProps = state => ({
-  contacts: state.contacts.filter,
-});
-
-const mapDispatchToProps = dispatch => ({
-  onChange: event => dispatch(actions.onChangeFilter(event.target.value)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter); */

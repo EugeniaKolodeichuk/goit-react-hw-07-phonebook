@@ -2,23 +2,24 @@ import React from 'react';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../ContactList/ContactList.module.css';
-import { connect, useSelector, useDispatch } from 'react-redux';
-import operations, { onAddContact } from '../../redux/contacts/operations';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { getVisibleContacts } from '../../redux/contacts/selectors';
 import { fetchContacts } from '../../redux/contacts/operations';
 import { deleteContact } from '../../redux/contacts/operations';
+import { toast } from 'react-toastify';
 
-const ContactList = (/* {
-    contacts,
-    onDeleteContact
-  } */) => {
+const ContactList = () => {
   const contacts = useSelector(getVisibleContacts);
-  console.log(contacts);
+
   const dispatch = useDispatch();
 
   useEffect(() => dispatch(fetchContacts()), [dispatch]);
 
-  const onDeleteContact = id => dispatch(deleteContact(id));
+  const onDeleteContact = id => {
+    dispatch(deleteContact(id));
+    toast.success('Contact was deleted successfully');
+  };
 
   return (
     <div className={styles.section}>
@@ -53,16 +54,5 @@ ContactList.propTypes = {
     }),
   ),
 };
-
-/*Redux*/
-/* const mapStateToProps = ({ contacts: { items, filter } }) => ({
-  contacts: getVisibleContacts(items, filter),
-}); */
-
-/* const mapDispatchToProps = dispatch => ({
-  onDeleteContact: id => dispatch(actions.onDeleteContact(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactList); */
 
 export default ContactList;
