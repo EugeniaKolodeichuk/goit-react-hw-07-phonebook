@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 import styles from '../Form/Form.module.css';
 import operations from '../../redux/contacts/operations';
-import { onAddContact } from '../../redux/contacts/operations';
+import { addContact } from '../../redux/contacts/operations';
 
 export default function Form(/* { onAddContact } */) {
   const prodIdName = uuidv4();
@@ -48,7 +48,7 @@ export default function Form(/* { onAddContact } */) {
       )
     ) {
       alert(`${name} is already in contacts`);
-    } else dispatch(onAddContact(name, number));
+    } else dispatch(addContact(name, number));
 
     /* onAddContact(name, number); */
     resetForm();

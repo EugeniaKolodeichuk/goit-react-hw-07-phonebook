@@ -14,7 +14,7 @@ export const fetchContacts = createAsyncThunk(
   },
 );
 
-export const onAddContact = createAsyncThunk(
+export const addContact = createAsyncThunk(
   'contacts/onAddContact',
   async (name, number) => {
     const contact = { name, number, id: uuidv4() };
@@ -35,15 +35,24 @@ export const onAddContact = createAsyncThunk(
     .catch(error => dispatch(actions.addContactError(error)));
 }; */
 
-const onDeleteContact = contactId => dispatch => {
+export const deleteContact = createAsyncThunk(
+  'contacts/onDeleteContact',
+  async id => {
+    const { data } = await axios.delete(`/contacts/${id}`);
+    console.log(data);
+    return data;
+  },
+);
+
+/* const onDeleteContact = contactId => dispatch => {
   dispatch(actions.deleteContactRequest());
   axios
     .delete(`/contacts/${contactId}`)
     .then(() => dispatch(actions.deleteContactSuccess(contactId)))
     .catch(error => dispatch(actions.deleteContactError(error)));
-};
+}; */
 
-export default { onDeleteContact };
+/* export default { onDeleteContact }; */
 
 /* export const fetchBooks = createAsyncThunk(
   'books/fetchBooks',
