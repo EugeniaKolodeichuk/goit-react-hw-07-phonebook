@@ -15,11 +15,11 @@ export const fetchContacts = createAsyncThunk(
 );
 
 export const onAddContact = createAsyncThunk(
-  'contacts/onAddContacts',
+  'contacts/onAddContact',
   async (name, number) => {
-    const contact = { name, number };
+    const contact = { name, number, id: uuidv4() };
     const { data } = await axios.post('/contacts', contact);
-
+    console.log(data);
     return data;
   },
 );
@@ -44,3 +44,15 @@ const onDeleteContact = contactId => dispatch => {
 };
 
 export default { onDeleteContact };
+
+/* export const fetchBooks = createAsyncThunk(
+  'books/fetchBooks',
+  async (_, { rejectWithValue }) => {
+    try {
+      const books = await bookShelfAPI.fetchBooks();
+      return books;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+); */
